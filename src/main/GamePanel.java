@@ -1,21 +1,25 @@
+package main;
+
+import Entity.Jogador;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable{
     // Configurações de tela
-    final int originalTileSize = 16; // quadros 16x16
-    final int scale = 3;
+    private final int originalTileSize = 16; // quadros 16x16
+    private final int scale = 3;
+    public final int tileSize = originalTileSize * scale; // 48x48 = tamanho real dos tiles
+    private final int maxTilesVertical = 16;
+    private final int maxTilesHorizontal = 12;
+    private final int larguraTela = tileSize * maxTilesVertical; //768px
+    private final int alturaTela = tileSize * maxTilesHorizontal;//576px
 
     final int FPS = 60;
 
-    final int tileSize = originalTileSize * scale; // 48x48 = tamanho real dos tiles
-    final int maxTilesVertical = 16;
-    final int maxTilesHorizontal = 12;
-    final int larguraTela = tileSize * maxTilesVertical; //768px
-    final int alturaTela = tileSize * maxTilesHorizontal;//576px
-
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
+    Jogador jogador = new Jogador(this, keyHandler);
 
     int playerX = 100;
     int playerY = 100;
@@ -66,31 +70,14 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update(){
-
-        if(keyHandler.upPressed){
-            playerY -= playerSpeed;
-        }
-        if(keyHandler.downPressed){
-            playerY += playerSpeed;
-        }
-        if(keyHandler.leftPressed){
-            playerX -= playerSpeed;
-        }
-        if (keyHandler.rightPressed){
-            playerX += playerSpeed;
-        }
-
+        jogador.update();
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
-
-        g2.setColor(Color.CYAN);
-
-        g2.fillRect(playerX, playerY, tileSize, tileSize);
-
+        jogador.drawJogador(g2);
         g2.dispose();
     }
 }
