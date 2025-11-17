@@ -1,6 +1,8 @@
 package main;
 
-import Entity.Jogador;
+import collision.CollisionManager;
+import entity.Jogador;
+import input.KeyHandler;
 import tile.TileManager;
 
 import javax.swing.*;
@@ -24,9 +26,10 @@ public class GamePanel extends JPanel implements Runnable{
 
     final int FPS = 60;
 
-    TileManager tileManager = new TileManager(this);
+    public TileManager tileManager = new TileManager(this);
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
+    public CollisionManager cm = new CollisionManager(this);
     public Jogador jogador = new Jogador(this, keyHandler);
 
     public GamePanel(){
@@ -45,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable{
     @Override
     public void run() {
 
-        double drawInterval =  1000000000/FPS;
+        double drawInterval =  1000000000D/FPS;
         double nextDrawTime = System.nanoTime() + drawInterval;
 
 

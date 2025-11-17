@@ -1,7 +1,7 @@
-package Entity;
+package entity;
 
 import main.GamePanel;
-import main.KeyHandler;
+import input.KeyHandler;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -21,6 +21,8 @@ public class Jogador extends Entidade {
 
         screenX = gamePanel.larguraTela/2 - (gamePanel.tileSize/2);
         screenY = gamePanel.alturaTela/2 - (gamePanel.tileSize/2);
+
+        solidArea = new Rectangle(8, 16, 32, 32);
 
         setValoresDefault();
         getImagemJogador();
@@ -50,22 +52,30 @@ public class Jogador extends Entidade {
     }
 
     public void update(){
-        if(keyHandler.upPressed == true || keyHandler.downPressed == true || keyHandler.rightPressed == true || keyHandler.leftPressed == true){
+        if(keyHandler.upPressed || keyHandler.downPressed || keyHandler.rightPressed || keyHandler.leftPressed){
             if(keyHandler.upPressed){
                 direcao = "cima";
-                worldY -= velocidade;
             }
             if(keyHandler.downPressed){
                 direcao = "baixo";
-                worldY += velocidade;
             }
             if(keyHandler.leftPressed){
                 direcao = "esquerda";
-                worldX -= velocidade;
             }
             if (keyHandler.rightPressed){
                 direcao = "direita";
-                worldX += velocidade;
+            }
+
+            collisionOn = false;
+            gamePanel.cm.checkTile(this);
+
+            if (!collisionOn){
+                switch (direcao){
+                    case "cima" -> worldY -= velocidade;
+                    case "baixo" -> worldY += velocidade;
+                    case "esquerda" -> worldX -= velocidade;
+                    case "direita" -> worldX += velocidade;
+                }
             }
 
             spriteCounter++;
