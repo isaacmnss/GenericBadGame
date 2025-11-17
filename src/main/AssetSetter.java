@@ -1,6 +1,7 @@
 package main;
 
 import objects.Bau;
+import objects.Botas;
 import objects.Chave;
 import objects.Porta;
 
@@ -39,5 +40,9 @@ public class AssetSetter {
         gp.objeto[6] = new Bau();
         gp.objeto[6].worldX = 10 * gp.tileSize;
         gp.objeto[6].worldY = 7 * gp.tileSize;
+
+        gp.objeto[7] = new Botas();
+        gp.objeto[6].worldX = 37 * gp.tileSize;
+        gp.objeto[6].worldY = 42 * gp.tileSize;
     }
 }

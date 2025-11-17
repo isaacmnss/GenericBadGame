@@ -111,6 +111,11 @@ public class Jogador extends Entidade {
                         gamePanel.objeto[index] = null;
                         chavesNoInventario--;
                     }
+                    break;
+                case "botas":
+                    velocidade += 1;
+                    gamePanel.objeto[index] = null;
+                    break;
             }
         }
 
