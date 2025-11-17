@@ -58,4 +58,73 @@ public class CollisionManager {
                 break;
         }
     }
+
+    public int checkObjeto(Entidade entidade, boolean jogador){
+        int index = 999;
+
+
+        for (int i = 0; i < gp.objeto.length; i++) {
+            if(gp.objeto[i] != null){
+                // Obter área sólida da entidade
+                entidade.solidArea.x = entidade.worldX + entidade.solidArea.x;
+                entidade.solidArea.y = entidade.worldY + entidade.solidArea.y;
+
+                gp.objeto[i].solidArea.x = gp.objeto[i].worldX + gp.objeto[i].solidArea.x;
+                gp.objeto[i].solidArea.y = gp.objeto[i].worldY + gp.objeto[i].solidArea.y;
+
+                switch (entidade.direcao){
+                    case "cima":
+                        entidade.solidArea.y -= entidade.velocidade;
+                        if(entidade.solidArea.intersects(gp.objeto[i].solidArea)){
+                            if(gp.objeto[i].colisao){
+                                entidade.collisionOn = true;
+                            }
+                            if (jogador){
+                                index = i;
+                            }
+                        }
+                        break;
+                    case "baixo":
+                        entidade.solidArea.y += entidade.velocidade;
+                        if(entidade.solidArea.intersects(gp.objeto[i].solidArea)){
+                            if(gp.objeto[i].colisao){
+                                entidade.collisionOn = true;
+                            }
+                            if (jogador){
+                                index = i;
+                            }
+                        }
+                        break;
+                    case "esquerda":
+                        entidade.solidArea.x -= entidade.velocidade;
+                        if(entidade.solidArea.intersects(gp.objeto[i].solidArea)){
+                            if(gp.objeto[i].colisao){
+                                entidade.collisionOn = true;
+                            }
+                            if (jogador){
+                                index = i;
+                            }
+                        }
+                        break;
+                    case "direita":
+                        entidade.solidArea.x += entidade.velocidade;
+                        if(entidade.solidArea.intersects(gp.objeto[i].solidArea)){
+                            if(gp.objeto[i].colisao){
+                                entidade.collisionOn = true;
+                            }
+                            if (jogador){
+                                index = i;
+                            }
+                        }
+                        break;
+                }
+                entidade.solidArea.x = entidade.solidAreaDefaultX;
+                entidade.solidArea.y = entidade. solidAreaDefaultY;
+                gp.objeto[i].solidArea.x = gp.objeto[i].solidAreaDefaultX;
+                gp.objeto[i].solidArea.y = gp.objeto[i].solidAreaDefaultY;
+            }
+        }
+
+        return index;
+    }
 }

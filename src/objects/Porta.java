@@ -13,5 +13,6 @@ public class Porta extends SuperObjeto{
         }catch (IOException e){
             throw new RuntimeException("Falha ao carregar recurso: /objects/door.png", e);
         }
+        colisao = true;
     }
 }

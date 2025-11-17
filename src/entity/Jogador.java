@@ -16,6 +16,7 @@ public class Jogador extends Entidade {
     public final int screenX;
     public final int screenY;
 
+    public int chavesNoInventario = 0;
     public Jogador(GamePanel gamePanel, KeyHandler keyHandler){
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
@@ -24,6 +25,8 @@ public class Jogador extends Entidade {
         screenY = gamePanel.alturaTela/2 - (gamePanel.tileSize/2);
 
         solidArea = new Rectangle(8, 16, 32, 32);
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
 
         setValoresDefault();
         getImagemJogador();
@@ -70,6 +73,9 @@ public class Jogador extends Entidade {
             collisionOn = false;
             gamePanel.cm.checkTile(this);
 
+            int indexObjeto = gamePanel.cm.checkObjeto(this, true);
+            pegarObjeto(indexObjeto);
+
             if (!collisionOn){
                 switch (direcao){
                     case "cima" -> worldY -= velocidade;
@@ -89,6 +95,25 @@ public class Jogador extends Entidade {
                 spriteCounter = 0;
             }
         }
+    }
+
+    public void pegarObjeto(int index){
+        if(index != 999){
+
+            String nomeObjeto = gamePanel.objeto[index].nome;
+            switch (nomeObjeto){
+                case "chave":
+                    chavesNoInventario++;
+                    gamePanel.objeto[index] = null;
+                    break;
+                case "porta":
+                    if (chavesNoInventario > 0) {
+                        gamePanel.objeto[index] = null;
+                        chavesNoInventario--;
+                    }
+            }
+        }
+
     }
 
     public void drawJogador(Graphics2D g2){
