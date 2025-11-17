@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Jogador extends Entidade {
     private GamePanel gamePanel;
@@ -37,17 +38,17 @@ public class Jogador extends Entidade {
 
     public void getImagemJogador(){
         try {
-            cima1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_1.png"));
-            cima2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_2.png"));
-            baixo1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_1.png"));
-            baixo2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_2.png"));
-            esquerda1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_1.png"));
-            esquerda2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_2.png"));
-            direita1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_1.png"));
-            direita2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_2.png"));
+            cima1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_1.png")));
+            cima2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_2.png")));
+            baixo1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_down_1.png")));
+            baixo2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_down_2.png")));
+            esquerda1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_1.png")));
+            esquerda2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_2.png")));
+            direita1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_1.png")));
+            direita2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_2.png")));
 
         }catch (IOException e){
-            e.printStackTrace();
+            throw new RuntimeException("Falha ao carregar recursos", e);
         }
     }
 

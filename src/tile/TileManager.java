@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 public class TileManager {
     GamePanel gamePanel;
@@ -25,28 +26,28 @@ public class TileManager {
     public void getTileImage(){
         try {
             tiles[0] = new Tile();
-            tiles[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass.png"));
+            tiles[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
 
             tiles[1] = new Tile();
-            tiles[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
+            tiles[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/wall.png")));
             tiles[1].colisao = true;
 
             tiles[2] = new Tile();
-            tiles[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
+            tiles[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/water.png")));
             tiles[2].colisao = true;
 
             tiles[3] = new Tile();
-            tiles[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/earth.png"));
+            tiles[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/earth.png")));
 
             tiles[4] = new Tile();
-            tiles[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tree.png"));
+            tiles[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
             tiles[4].colisao = true;
 
             tiles[5] = new Tile();
-            tiles[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/sand.png"));
+            tiles[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
 
         }catch (IOException e){
-            e.printStackTrace();
+            throw new RuntimeException("Falha ao carregar recurso", e);
         }
     }
 
@@ -107,7 +108,7 @@ public class TileManager {
             }
             bufferedReader.close();
         }catch (IOException e){
-            e.printStackTrace();
+            throw new RuntimeException("Falha ao carregar recurso: mapa ", e);
         }
     }
 }
