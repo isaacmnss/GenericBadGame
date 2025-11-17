@@ -12,17 +12,23 @@ public class Jogador extends Entidade {
     private GamePanel gamePanel;
     private KeyHandler keyHandler;
 
+    public final int screenX;
+    public final int screenY;
+
     public Jogador(GamePanel gamePanel, KeyHandler keyHandler){
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
+
+        screenX = gamePanel.larguraTela/2 - (gamePanel.tileSize/2);
+        screenY = gamePanel.alturaTela/2 - (gamePanel.tileSize/2);
 
         setValoresDefault();
         getImagemJogador();
     }
 
     public void setValoresDefault(){
-        x = 100;
-        y = 100;
+        worldX = gamePanel.tileSize * 23;
+        worldY = gamePanel.tileSize * 21;
         velocidade = 4;
         direcao = "baixo";
     }
@@ -47,19 +53,19 @@ public class Jogador extends Entidade {
         if(keyHandler.upPressed == true || keyHandler.downPressed == true || keyHandler.rightPressed == true || keyHandler.leftPressed == true){
             if(keyHandler.upPressed){
                 direcao = "cima";
-                y -= velocidade;
+                worldY -= velocidade;
             }
             if(keyHandler.downPressed){
                 direcao = "baixo";
-                y += velocidade;
+                worldY += velocidade;
             }
             if(keyHandler.leftPressed){
                 direcao = "esquerda";
-                x -= velocidade;
+                worldX -= velocidade;
             }
             if (keyHandler.rightPressed){
                 direcao = "direita";
-                x += velocidade;
+                worldX += velocidade;
             }
 
             spriteCounter++;
@@ -111,6 +117,6 @@ public class Jogador extends Entidade {
                 }
                 break;
         }
-        g2.drawImage(image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
+        g2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
     }
 }
