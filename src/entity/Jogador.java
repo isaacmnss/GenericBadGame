@@ -17,6 +17,8 @@ public class Jogador extends Entidade {
     public final int screenY;
 
     public int chavesNoInventario = 0;
+    public int idleCounter = 0;
+
     public Jogador(GamePanel gamePanel, KeyHandler keyHandler){
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
@@ -94,6 +96,12 @@ public class Jogador extends Entidade {
                 }
                 spriteCounter = 0;
             }
+        }else {
+            idleCounter++;
+            if (idleCounter == 20){
+                spriteNum=1;
+                idleCounter = 0;
+            }
         }
     }
 
@@ -105,16 +113,24 @@ public class Jogador extends Entidade {
                 case "chave":
                     chavesNoInventario++;
                     gamePanel.objeto[index] = null;
+                    gamePanel.hud.exibirMensagem("Você pegou uma chave!");
                     break;
                 case "porta":
                     if (chavesNoInventario > 0) {
                         gamePanel.objeto[index] = null;
                         chavesNoInventario--;
+                        gamePanel.hud.exibirMensagem("Você abriu uma porta!");
+                    }else {
+                        gamePanel.hud.exibirMensagem("Você precisa de uma chave.");
                     }
                     break;
                 case "botas":
                     velocidade += 1;
                     gamePanel.objeto[index] = null;
+                    gamePanel.hud.exibirMensagem("Velocidade aumentada!");
+                    break;
+                case "bau":
+                    gamePanel.hud.jogoFinalizado = true;
                     break;
             }
         }

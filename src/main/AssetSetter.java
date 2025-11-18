@@ -42,7 +42,7 @@ public class AssetSetter {
         gp.objeto[6].worldY = 7 * gp.tileSize;
 
         gp.objeto[7] = new Botas();
-        gp.objeto[6].worldX = 37 * gp.tileSize;
-        gp.objeto[6].worldY = 42 * gp.tileSize;
+        gp.objeto[7].worldX = 37 * gp.tileSize;
+        gp.objeto[7].worldY = 42 * gp.tileSize;
     }
 }

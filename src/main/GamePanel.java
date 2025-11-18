@@ -5,6 +5,7 @@ import entity.Jogador;
 import input.KeyHandler;
 import objects.SuperObjeto;
 import tile.TileManager;
+import ui.HUD;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,14 +27,16 @@ public class GamePanel extends JPanel implements Runnable{
     public final int alturaMundo =  tileSize * maxLinhasMundo;
 
     final int FPS = 60;
+    public Thread gameThread;
 
-    public TileManager tileManager = new TileManager(this);
     KeyHandler keyHandler = new KeyHandler();
-    Thread gameThread;
+    public TileManager tileManager = new TileManager(this);
     public CollisionManager cm = new CollisionManager(this);
     public AssetSetter assetSetter = new AssetSetter(this);
+    public HUD hud = new HUD(this);
     public Jogador jogador = new Jogador(this, keyHandler);
-    public SuperObjeto objeto[] = new SuperObjeto[10];
+
+    public SuperObjeto[] objeto = new SuperObjeto[10];
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(larguraTela,alturaTela));
@@ -92,16 +95,21 @@ public class GamePanel extends JPanel implements Runnable{
 
         Graphics2D g2 = (Graphics2D) g;
 
+        long inicioRenderizacao = 0;
+        inicioRenderizacao = System.nanoTime();
+
         tileManager.draw(g2);
 
-        for (int i = 0; i < objeto.length; i++) {
-            if(objeto[i] != null){
-                objeto[i].draw(g2,this);
+        for (SuperObjeto superObjeto : objeto) {
+            if (superObjeto != null) {
+                superObjeto.draw(g2, this);
             }
-            
+
         }
 
         jogador.drawJogador(g2);
+
+        hud.draw(g2);
 
         g2.dispose();
     }
