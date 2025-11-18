@@ -61,7 +61,7 @@ public class HUD {
     }
 
     public void drawJanela(int x, int y, int largura, int altura){
-        Color c = new Color(0,0,0,0);
+        Color c = new Color(0,0,0);
         g2.setColor(c);
         g2.fillRoundRect(x, y, largura, altura, 35, 35);
 
