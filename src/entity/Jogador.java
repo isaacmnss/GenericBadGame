@@ -17,7 +17,6 @@ public class Jogador extends Entidade {
     public final int screenX;
     public final int screenY;
 
-    public int chavesNoInventario = 0;
     public int idleCounter = 0;
 
     public Jogador(GamePanel gamePanel, KeyHandler keyHandler){
@@ -116,33 +115,7 @@ public class Jogador extends Entidade {
     public void pegarObjeto(int index){
         if(index != 999){
 
-            String nomeObjeto = gamePanel.objeto[index].nome;
-            switch (nomeObjeto){
-                case "chave":
-                    chavesNoInventario++;
-                    gamePanel.objeto[index] = null;
-                    gamePanel.hud.exibirMensagem("Você pegou uma chave!");
-                    break;
-                case "porta":
-                    if (chavesNoInventario > 0) {
-                        gamePanel.objeto[index] = null;
-                        chavesNoInventario--;
-                        gamePanel.hud.exibirMensagem("Você abriu uma porta!");
-                    }else {
-                        gamePanel.hud.exibirMensagem("Você precisa de uma chave.");
-                    }
-                    break;
-                case "botas":
-                    velocidade += 1;
-                    gamePanel.objeto[index] = null;
-                    gamePanel.hud.exibirMensagem("Velocidade aumentada!");
-                    break;
-                case "bau":
-                    gamePanel.hud.jogoFinalizado = true;
-                    break;
-            }
         }
-
     }
 
     public void drawJogador(Graphics2D g2){
