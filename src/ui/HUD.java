@@ -19,7 +19,7 @@ public class HUD {
         this.gp = gp;
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         arial_80B = new Font("Arial", Font.BOLD, 80);
-        Chave chave = new Chave();
+        Chave chave = new Chave(gp);
         imagemChave = chave.imagem;
 
     }

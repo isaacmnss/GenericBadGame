@@ -1,6 +1,7 @@
 package tile;
 
 import main.GamePanel;
+import main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -24,31 +25,12 @@ public class TileManager {
     }
 
     public void getTileImage(){
-        try {
-            tiles[0] = new Tile();
-            tiles[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/grass.png")));
-
-            tiles[1] = new Tile();
-            tiles[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/wall.png")));
-            tiles[1].colisao = true;
-
-            tiles[2] = new Tile();
-            tiles[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/water.png")));
-            tiles[2].colisao = true;
-
-            tiles[3] = new Tile();
-            tiles[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/earth.png")));
-
-            tiles[4] = new Tile();
-            tiles[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/tree.png")));
-            tiles[4].colisao = true;
-
-            tiles[5] = new Tile();
-            tiles[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/sand.png")));
-
-        }catch (IOException e){
-            throw new RuntimeException("Falha ao carregar recurso", e);
-        }
+        setup(0, "grass", false);
+        setup(1, "wall", true);
+        setup(2, "water", true);
+        setup(3,"earth", false);
+        setup(4, "tree", true);
+        setup(5, "sand", false);
     }
 
     public void draw(Graphics2D g2){
@@ -69,10 +51,9 @@ public class TileManager {
                worldX - gamePanel.tileSize < gamePanel.jogador.worldX + gamePanel.jogador.screenX &&
                worldY + gamePanel.tileSize > gamePanel.jogador.worldY - gamePanel.jogador.screenY &&
                worldY - gamePanel.tileSize < gamePanel.jogador.worldY + gamePanel.jogador.screenY){
-                g2.drawImage(tiles[tileNum].image, telaX, telaY, gamePanel.tileSize, gamePanel.tileSize, null);
+                g2.drawImage(tiles[tileNum].image, telaX, telaY, null);
 
             }
-
 
             colunaMundo++;
 
@@ -80,6 +61,18 @@ public class TileManager {
                 colunaMundo = 0;
                 linhaMundo++;
             }
+        }
+    }
+
+    public void setup(int index, String nomeImagem, boolean colisao){
+        UtilityTool utilityTool = new UtilityTool();
+        try {
+            tiles[index] = new Tile();
+            tiles[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/"+ nomeImagem +".png")));
+            tiles[index].image = utilityTool.scaleImage(tiles[index].image, gamePanel.tileSize, gamePanel.tileSize);
+            tiles[index].colisao = colisao;
+        }catch (IOException e){
+            throw new RuntimeException("Erro ao buscar recurso: "+ nomeImagem, e);
         }
     }
 

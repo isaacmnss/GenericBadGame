@@ -63,15 +63,8 @@ public class GamePanel extends JPanel implements Runnable{
 
 
         while(gameThread!= null){
-
-            long currentTime = System.nanoTime();
-            System.out.println(currentTime);
-
             update();
-
             repaint();
-
-
             try {
                 double remainingTime = nextDrawTime - System.nanoTime();
                 remainingTime = remainingTime/1000000;
@@ -96,7 +89,10 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D) g;
 
         long inicioRenderizacao = 0;
-        inicioRenderizacao = System.nanoTime();
+        if (keyHandler.checkTempoDeRender){
+            inicioRenderizacao = System.nanoTime();
+        }
+
 
         tileManager.draw(g2);
 
@@ -110,6 +106,14 @@ public class GamePanel extends JPanel implements Runnable{
         jogador.drawJogador(g2);
 
         hud.draw(g2);
+
+        if (keyHandler.checkTempoDeRender){
+            long fimRenderizacao = System.nanoTime();
+            long tempoRender = fimRenderizacao - inicioRenderizacao;
+            g2.setColor(Color.white);
+            g2.drawString("Tempo de rendezização: "+tempoRender,10,400);
+            System.out.println("Tempo de renderização: "+tempoRender);
+        }
 
         g2.dispose();
     }

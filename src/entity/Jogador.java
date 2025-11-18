@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import input.KeyHandler;
+import main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -42,19 +43,26 @@ public class Jogador extends Entidade {
     }
 
     public void getImagemJogador(){
-        try {
-            cima1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_1.png")));
-            cima2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_up_2.png")));
-            baixo1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_down_1.png")));
-            baixo2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_down_2.png")));
-            esquerda1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_1.png")));
-            esquerda2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_left_2.png")));
-            direita1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_1.png")));
-            direita2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/boy_right_2.png")));
+        cima1 = setup("boy_up_1");
+        cima2 = setup("boy_up_2");
+        baixo1 = setup("boy_down_1");
+        baixo2 = setup("boy_down_2");
+        esquerda1 = setup("boy_left_1");
+        esquerda2 = setup("boy_left_2");
+        direita1 = setup("boy_right_1");
+        direita2 = setup("boy_right_2");
+    }
 
+    public BufferedImage setup(String nomeImagem){
+        UtilityTool utilityTool = new UtilityTool();
+        BufferedImage imagem = null;
+        try {
+            imagem = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/"+nomeImagem+".png")));
+            imagem = utilityTool.scaleImage(imagem, gamePanel.tileSize, gamePanel.tileSize);
         }catch (IOException e){
-            throw new RuntimeException("Falha ao carregar recursos", e);
+            throw new RuntimeException("Falha ao obter recurso: "+"/player/"+nomeImagem+".png", e);
         }
+        return imagem;
     }
 
     public void update(){
