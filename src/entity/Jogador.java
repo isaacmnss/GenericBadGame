@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Jogador extends Entidade {
-    private GamePanel gamePanel;
     private KeyHandler keyHandler;
 
     public final int screenX;
@@ -20,7 +19,8 @@ public class Jogador extends Entidade {
     public int idleCounter = 0;
 
     public Jogador(GamePanel gamePanel, KeyHandler keyHandler){
-        this.gamePanel = gamePanel;
+        super(gamePanel);
+
         this.keyHandler = keyHandler;
 
         screenX = gamePanel.larguraTela/2 - (gamePanel.tileSize/2);
@@ -35,33 +35,21 @@ public class Jogador extends Entidade {
     }
 
     public void setValoresDefault(){
-        worldX = gamePanel.tileSize * 23;
-        worldY = gamePanel.tileSize * 21;
+        worldX = gp.tileSize * 23;
+        worldY = gp.tileSize * 21;
         velocidade = 4;
         direcao = "baixo";
     }
 
     public void getImagemJogador(){
-        cima1 = setup("boy_up_1");
-        cima2 = setup("boy_up_2");
-        baixo1 = setup("boy_down_1");
-        baixo2 = setup("boy_down_2");
-        esquerda1 = setup("boy_left_1");
-        esquerda2 = setup("boy_left_2");
-        direita1 = setup("boy_right_1");
-        direita2 = setup("boy_right_2");
-    }
-
-    public BufferedImage setup(String nomeImagem){
-        UtilityTool utilityTool = new UtilityTool();
-        BufferedImage imagem = null;
-        try {
-            imagem = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/"+nomeImagem+".png")));
-            imagem = utilityTool.scaleImage(imagem, gamePanel.tileSize, gamePanel.tileSize);
-        }catch (IOException e){
-            throw new RuntimeException("Falha ao obter recurso: "+"/player/"+nomeImagem+".png", e);
-        }
-        return imagem;
+        cima1 = setup("/player/boy_up_1.png");
+        cima2 = setup("/player/boy_up_2.png");
+        baixo1 = setup("/player/boy_down_1.png");
+        baixo2 = setup("/player/boy_down_2.png");
+        esquerda1 = setup("/player/boy_left_1.png");
+        esquerda2 = setup("/player/boy_left_2.png");
+        direita1 = setup("/player/boy_right_1.png");
+        direita2 = setup("/player/boy_right_2.png");
     }
 
     public void update(){
@@ -80,10 +68,13 @@ public class Jogador extends Entidade {
             }
 
             collisionOn = false;
-            gamePanel.cm.checkTile(this);
+            gp.cm.checkTile(this);
 
-            int indexObjeto = gamePanel.cm.checkObjeto(this, true);
+            int indexObjeto = gp.cm.checkObjeto(this, true);
             pegarObjeto(indexObjeto);
+
+            int npcIndex = gp.cm.checkEntidade(this, gp.npcs);
+            interagirComNPC(npcIndex);
 
             if (!collisionOn){
                 switch (direcao){
@@ -109,6 +100,12 @@ public class Jogador extends Entidade {
                 spriteNum=1;
                 idleCounter = 0;
             }
+        }
+    }
+
+    private void interagirComNPC(int npcIndex) {
+        if(npcIndex != 999){
+            gp.gameState = gp.dialogState;
         }
     }
 
@@ -155,6 +152,6 @@ public class Jogador extends Entidade {
                 }
                 break;
         }
-        g2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
     }
 }

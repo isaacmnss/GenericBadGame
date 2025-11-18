@@ -1,6 +1,7 @@
 package main;
 
 import collision.CollisionManager;
+import entity.Entidade;
 import entity.Jogador;
 import input.KeyHandler;
 import objects.SuperObjeto;
@@ -37,10 +38,12 @@ public class GamePanel extends JPanel implements Runnable{
 
     public Jogador jogador = new Jogador(this, keyHandler);
     public SuperObjeto[] objeto = new SuperObjeto[10];
+    public Entidade[] npcs = new Entidade[10];
 
     public int gameState;
     public final int playState = 1;
     public final int pauseState = 2;
+    public final int dialogState = 3;
 
 
     public GamePanel(){
@@ -53,6 +56,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void setupGame(){
         assetSetter.setObjetos();
+        assetSetter.setNPC();
         gameState = playState;
     }
 
@@ -88,6 +92,11 @@ public class GamePanel extends JPanel implements Runnable{
     public void update(){
         if (gameState == playState){
             jogador.update();
+            for (int i = 0; i < npcs.length; i++) {
+                if (npcs[i] != null){
+                    npcs[i].update();
+                }
+            }
         }
         if (gameState == pauseState){
 
@@ -113,6 +122,13 @@ public class GamePanel extends JPanel implements Runnable{
                 superObjeto.draw(g2, this);
             }
 
+        }
+
+        for (int i = 0; i < npcs.length; i++) {
+            if (npcs[i] !=  null){
+                npcs[i].draw(g2);
+            }
+            
         }
 
         jogador.drawJogador(g2);

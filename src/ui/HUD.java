@@ -31,12 +31,15 @@ public class HUD {
         this.g2 = g2;
         g2.setFont(arial_40);
         g2.setColor(Color.WHITE);
+
         if(gp.gameState == gp.playState){
-
-
+            //placehold.
         }
         if (gp.gameState == gp.pauseState){
             drawTelaDePause();
+        }
+        if (gp.gameState == gp.dialogState){
+            drawDialogo();
         }
     }
 
@@ -48,6 +51,22 @@ public class HUD {
 
         g2.drawString(texto, x, y);
     }
+
+    public void drawDialogo(){
+        int x = gp.tileSize*2;
+        int y = gp.tileSize/2;
+        int largura = gp.larguraTela - (gp.tileSize*4);
+        int altura = gp.tileSize*5;
+        drawJanela(x,y,largura,altura);
+    }
+
+    public void drawJanela(int x, int y, int largura, int altura){
+        Color c = new Color(0,0,0,0);
+        g2.setColor(c);
+        g2.fillRoundRect(x, y, largura, altura, 35, 35);
+
+    }
+
     public int getXParaTextoCentralizado(String texto){
         int tamanhoTexto = (int)g2.getFontMetrics().getStringBounds(texto, g2).getWidth();
         return gp.larguraTela/2 - tamanhoTexto/2;
