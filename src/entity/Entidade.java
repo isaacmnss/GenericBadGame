@@ -14,7 +14,7 @@ public class Entidade {
     public int worldX, worldY;
     public int velocidade;
     public BufferedImage cima1, cima2, baixo1, baixo2, esquerda1, esquerda2, direita1, direita2;
-    public String direcao;
+    public String direcao = "baixo";
     public int spriteCounter = 0;
     public int spriteNum = 1;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
@@ -25,6 +25,10 @@ public class Entidade {
     int indexDialogo = 0;
     public int vidaMaxima;
     public int vida;
+    public BufferedImage imagem, imagem2, imagem3;
+    public String nome;
+    public boolean colisao = false;
+
 
     public Entidade(GamePanel gp) {
         this.gp = gp;

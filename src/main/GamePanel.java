@@ -4,12 +4,14 @@ import collision.CollisionManager;
 import entity.Entidade;
 import entity.Jogador;
 import input.KeyHandler;
-import objects.SuperObjeto;
 import tile.TileManager;
 import ui.HUD;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class GamePanel extends JPanel implements Runnable{
     // Configurações de tela
@@ -38,8 +40,10 @@ public class GamePanel extends JPanel implements Runnable{
     public EventHandler eventHandler = new EventHandler(this);
 
     public Jogador jogador = new Jogador(this, keyHandler);
-    public SuperObjeto[] objeto = new SuperObjeto[10];
+    public Entidade[] objeto = new Entidade[10];
     public Entidade[] npcs = new Entidade[10];
+    ArrayList<Entidade> listaEntidades = new ArrayList<>();
+
 
     public int gameState;
     public final int titleState = 0;
@@ -119,23 +123,37 @@ public class GamePanel extends JPanel implements Runnable{
         if(gameState == titleState){
             hud.draw(g2);
         }else {
+
             tileManager.draw(g2);
 
-            for (SuperObjeto superObjeto : objeto) {
-                if (superObjeto != null) {
-                    superObjeto.draw(g2, this);
+            listaEntidades.add(jogador);
+
+            for (Entidade npc : npcs) {
+                if (npc != null) {
+                    listaEntidades.add(npc);
                 }
+            }
+
+            for (Entidade entidade : objeto) {
+                if (entidade != null) {
+                    listaEntidades.add(entidade);
+                }
+            }
+
+            listaEntidades.sort(new Comparator<Entidade>() {
+                @Override
+                public int compare(Entidade e1, Entidade e2) {
+                    int result = Integer.compare(e1.worldY, e2.worldY);
+                    return 0;
+                }
+            });
+
+            listaEntidades.forEach(entidade -> entidade.draw(g2));
+            for (int i = 0; i < listaEntidades.size(); i++) {
+                listaEntidades.remove(i);
 
             }
 
-            for (int i = 0; i < npcs.length; i++) {
-                if (npcs[i] !=  null){
-                    npcs[i].draw(g2);
-                }
-
-            }
-
-            jogador.drawJogador(g2);
 
             hud.draw(g2);
         }

@@ -1,9 +1,8 @@
 package ui;
 
+import entity.Entidade;
 import main.GamePanel;
-import objects.Chave;
-import objects.Coracao;
-import objects.SuperObjeto;
+import entity.objects.Coracao;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -21,7 +20,7 @@ public class HUD {
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         arial_80B = new Font("Arial", Font.BOLD, 80);
 
-        SuperObjeto coracao = new Coracao(gp);
+        Entidade coracao = new Coracao(gp);
         heart_full = coracao.imagem;
         heart_half = coracao.imagem2;
         heart_blank = coracao.imagem3;
