@@ -10,7 +10,6 @@ import ui.HUD;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -163,10 +162,9 @@ public class GamePanel extends JPanel implements Runnable{
             });
 
             listaEntidades.forEach(entidade -> entidade.draw(g2));
-            for (int i = 0; i < listaEntidades.size(); i++) {
-                listaEntidades.remove(i);
+            listaEntidades.clear();
 
-            }
+
 
 
             hud.draw(g2);

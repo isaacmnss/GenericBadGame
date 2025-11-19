@@ -75,6 +75,9 @@ public class Jogador extends Entidade {
             int npcIndex = gp.cm.checkEntidade(this, gp.npcs);
             interagirComNPC(npcIndex);
 
+            int indexMonstro = gp.cm.checkEntidade(this, gp.monstros);
+            contatoMonstro(indexMonstro);
+
             gp.eventHandler.checkEvento();
 
             gp.keyHandler.interactPressed = false;
@@ -104,6 +107,13 @@ public class Jogador extends Entidade {
                 idleCounter = 0;
             }
         }
+        if (invencibilidade){
+            iFrames++;
+            if (iFrames > 60){
+                invencibilidade =false;
+                iFrames = 0;
+            }
+        }
     }
 
     private void interagirComNPC(int npcIndex) {
@@ -116,10 +126,26 @@ public class Jogador extends Entidade {
 
     }
 
+    public void contatoMonstro(int indexMonstro){
+        if (indexMonstro != 999){
+
+            if (!invencibilidade){
+                vida -=1;
+                invencibilidade = true;
+            }
+
+        }
+    }
+
     public void pegarObjeto(int index){
         if(index != 999){
 
         }
+    }
+
+    @Override
+    public void draw(Graphics2D g2) {
+        drawJogador(g2);
     }
 
     public void drawJogador(Graphics2D g2){
@@ -159,6 +185,17 @@ public class Jogador extends Entidade {
                 }
                 break;
         }
+
+        if (invencibilidade){
+            if (iFrames % 6 < 3) {
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+            }
+        }
         g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+
+
+
     }
 }

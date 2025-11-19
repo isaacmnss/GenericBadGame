@@ -10,6 +10,7 @@ public class Slime extends Entidade {
         super(gp);
 
         nome = "Slime Verde";
+        tipo = 2;
         velocidade = 1;
         vidaMaxima = 4;
         vida = vidaMaxima;

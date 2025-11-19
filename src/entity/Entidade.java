@@ -21,6 +21,8 @@ public class Entidade {
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
     public int lockActionCounter = 0;
+    public boolean invencibilidade = false;
+    public int iFrames = 0;
     String[]  dialogos = new String[20];
     int indexDialogo = 0;
     public int vidaMaxima;
@@ -28,6 +30,7 @@ public class Entidade {
     public BufferedImage imagem, imagem2, imagem3;
     public String nome;
     public boolean colisao = false;
+    public int tipo;
 
 
     public Entidade(GamePanel gp) {
@@ -58,7 +61,16 @@ public class Entidade {
         collisionOn = false;
         gp.cm.checkTile(this);
         gp.cm.checkObjeto(this, false);
-        gp.cm.checkPlayer(this);
+        gp.cm.checkEntidade(this, gp.npcs);
+        gp.cm.checkEntidade(this, gp.monstros);
+        boolean  contatoJogador = gp.cm.checkPlayer(this);
+
+        if (this.tipo == 2 && contatoJogador){
+            if (!gp.jogador.invencibilidade){
+                gp.jogador.vida -=1;
+                gp.jogador.invencibilidade = true;
+            }
+        }
 
         if (!collisionOn){
             switch (direcao){
