@@ -42,6 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
     public Jogador jogador = new Jogador(this, keyHandler);
     public Entidade[] objeto = new Entidade[10];
     public Entidade[] npcs = new Entidade[10];
+    public Entidade[] monstros = new Entidade[20];
     ArrayList<Entidade> listaEntidades = new ArrayList<>();
 
 
@@ -63,7 +64,9 @@ public class GamePanel extends JPanel implements Runnable{
     public void setupGame(){
         assetSetter.setObjetos();
         assetSetter.setNPC();
+        assetSetter.setMonstros();
         gameState = titleState;
+
     }
 
     public void startGameThread(){
@@ -90,7 +93,7 @@ public class GamePanel extends JPanel implements Runnable{
                 Thread.sleep((long)remainingTime);
                 nextDrawTime += drawInterval;
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                throw new RuntimeException("Erro de Thread: ",e);
             }
         }
     }
@@ -98,9 +101,14 @@ public class GamePanel extends JPanel implements Runnable{
     public void update(){
         if (gameState == playState){
             jogador.update();
-            for (int i = 0; i < npcs.length; i++) {
-                if (npcs[i] != null){
-                    npcs[i].update();
+            for (Entidade npc : npcs) {
+                if (npc != null) {
+                    npc.update();
+                }
+            }
+            for (Entidade monstro : monstros) {
+                if (monstro != null){
+                    monstro.update();
                 }
             }
         }
@@ -134,9 +142,15 @@ public class GamePanel extends JPanel implements Runnable{
                 }
             }
 
-            for (Entidade entidade : objeto) {
-                if (entidade != null) {
-                    listaEntidades.add(entidade);
+            for (Entidade objeto : objeto) {
+                if (objeto != null) {
+                    listaEntidades.add(objeto);
+                }
+            }
+
+            for (Entidade monstro : monstros){
+                if (monstro != null){
+                    listaEntidades.add(monstro);
                 }
             }
 
