@@ -35,6 +35,7 @@ public class GamePanel extends JPanel implements Runnable{
     public CollisionManager cm = new CollisionManager(this);
     public AssetSetter assetSetter = new AssetSetter(this);
     public HUD hud = new HUD(this);
+    public EventHandler eventHandler = new EventHandler(this);
 
     public Jogador jogador = new Jogador(this, keyHandler);
     public SuperObjeto[] objeto = new SuperObjeto[10];

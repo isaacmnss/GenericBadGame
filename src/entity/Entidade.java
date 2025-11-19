@@ -23,6 +23,8 @@ public class Entidade {
     public int lockActionCounter = 0;
     String[]  dialogos = new String[20];
     int indexDialogo = 0;
+    public int vidaMaxima;
+    public int vida;
 
     public Entidade(GamePanel gp) {
         this.gp = gp;

@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
     GamePanel gp;
-    public boolean upPressed, downPressed, leftPressed, rightPressed, talkPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, interactPressed;
     public boolean checkTempoDeRender = false;
 
     public KeyHandler(GamePanel gp){
@@ -68,7 +68,7 @@ public class KeyHandler implements KeyListener {
                 checkTempoDeRender = !checkTempoDeRender;
             }
             if (code == KeyEvent.VK_F){
-                talkPressed = true;
+                interactPressed = true;
             }
         }
 

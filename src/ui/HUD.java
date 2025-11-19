@@ -2,6 +2,8 @@ package ui;
 
 import main.GamePanel;
 import objects.Chave;
+import objects.Coracao;
+import objects.SuperObjeto;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -10,6 +12,7 @@ public class HUD {
     GamePanel gp;
     Graphics2D g2;
     Font arial_40, arial_80B;
+    BufferedImage heart_full, heart_half, heart_blank;
     public String dialogoAtual;
     public int comando = 0;
 
@@ -17,6 +20,11 @@ public class HUD {
         this.gp = gp;
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         arial_80B = new Font("Arial", Font.BOLD, 80);
+
+        SuperObjeto coracao = new Coracao(gp);
+        heart_full = coracao.imagem;
+        heart_half = coracao.imagem2;
+        heart_blank = coracao.imagem3;
 
     }
 
@@ -30,13 +38,42 @@ public class HUD {
         }
 
         if(gp.gameState == gp.playState){
-            //placehold.
+            drawVidaJogador();
         }
         if (gp.gameState == gp.pauseState){
+            drawVidaJogador();
             drawTelaDePause();
         }
         if (gp.gameState == gp.dialogState){
+            drawVidaJogador();
             drawDialogo();
+        }
+    }
+
+    public void drawVidaJogador(){
+        int x = gp.tileSize/2;
+        int y = gp.tileSize/2;
+
+        int i = 0;
+
+        while (i< gp.jogador.vidaMaxima/2){
+            g2.drawImage(heart_blank, x, y, null);
+            i++;
+            x += gp.tileSize;
+        }
+
+        x = gp.tileSize/2;
+        y = gp.tileSize/2;
+        i = 0;
+
+        while (i< gp.jogador.vida){
+            g2.drawImage(heart_half, x, y,null);
+            i++;
+            if (i <  gp.jogador.vida){
+                g2.drawImage(heart_full, x, y, null);
+            }
+            i++;
+            x+= gp.tileSize;
         }
     }
 

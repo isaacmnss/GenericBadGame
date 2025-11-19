@@ -2,13 +2,9 @@ package entity;
 
 import main.GamePanel;
 import input.KeyHandler;
-import main.UtilityTool;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Objects;
 
 public class Jogador extends Entidade {
     private KeyHandler keyHandler;
@@ -39,6 +35,9 @@ public class Jogador extends Entidade {
         worldY = gp.tileSize * 21;
         velocidade = 4;
         direcao = "baixo";
+
+        vidaMaxima = 6;
+        vida = vidaMaxima;
     }
 
     public void getImagemJogador(){
@@ -76,6 +75,10 @@ public class Jogador extends Entidade {
             int npcIndex = gp.cm.checkEntidade(this, gp.npcs);
             interagirComNPC(npcIndex);
 
+            gp.eventHandler.checkEvento();
+
+            gp.keyHandler.interactPressed = false;
+
             if (!collisionOn){
                 switch (direcao){
                     case "cima" -> worldY -= velocidade;
@@ -105,12 +108,12 @@ public class Jogador extends Entidade {
 
     private void interagirComNPC(int npcIndex) {
         if(npcIndex != 999){
-            if (gp.keyHandler.talkPressed){
+            if (gp.keyHandler.interactPressed){
                 gp.gameState = gp.dialogState;
                 gp.npcs[npcIndex].falar();
             }
         }
-        gp.keyHandler.talkPressed = false;
+
     }
 
     public void pegarObjeto(int index){
