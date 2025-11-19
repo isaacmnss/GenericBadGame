@@ -30,11 +30,16 @@ public class Entidade {
     int indexDialogo = 0;
     public boolean invencivel = false;
     boolean atacando = false;
+    public boolean vivo = true;
+    public boolean morrendo = false;
+    public boolean barraDeVidaAtivada = false;
 
     public int iFrames = 0;
     public int spriteCounter = 0;
     public int spriteNum = 1;
     public int lockActionCounter = 0;
+    int deathCounter = 0;
+    int barraDeVidaCounter = 0;
 
 
     public int vidaMaxima;
@@ -49,6 +54,7 @@ public class Entidade {
     }
 
     public void setAcao(){}
+    public void damageReaction(){}
     public void falar() {
         if (dialogos[indexDialogo] == null) {
             indexDialogo = 0;
@@ -112,6 +118,30 @@ public class Entidade {
         }
     }
 
+    private void animacaoMorte(Graphics2D g2) {
+        deathCounter++;
+
+        int i = 5;
+
+        if (deathCounter <= i) {mudarOpacidade(g2,0f);}
+        if (deathCounter > i && deathCounter <= i*2) {mudarOpacidade(g2,1f);}
+        if (deathCounter > i*2 && deathCounter <= i*3) {mudarOpacidade(g2,0f);}
+        if (deathCounter > i*3 && deathCounter <= i*4) {mudarOpacidade(g2,1f);}
+        if (deathCounter > i*4 && deathCounter <= i*5) {mudarOpacidade(g2,0f);}
+        if (deathCounter > i*5 && deathCounter <= i*6) {mudarOpacidade(g2,1f);}
+        if (deathCounter > i*6 && deathCounter <= i*7) {mudarOpacidade(g2,0f);}
+        if (deathCounter > i*7 && deathCounter <= i*8) {mudarOpacidade(g2,1f);}
+        if (deathCounter> i*8){
+            morrendo = false;
+            vivo = false;
+        }
+    }
+
+    public void mudarOpacidade(Graphics2D g2, float valorAlpha){
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, valorAlpha));
+    }
+
+
     public BufferedImage setup(String pathImagem, int largura, int altura){
         UtilityTool utilityTool = new UtilityTool();
         BufferedImage imagem;
@@ -152,13 +182,39 @@ public class Entidade {
                     if (spriteNum == 2) {imagem = direita2;}
                     break;
             }
-            if (invencivel){
-                if (iFrames % 6 < 3) {
-                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+
+            if (tipo == 2 && barraDeVidaAtivada){
+
+                double escalaVida = (double)gp.tileSize/vidaMaxima;
+                double valorVidaBarra = escalaVida*vida;
+
+                g2.setColor(new Color(35,35,35));
+                g2.fillRect(telaX-1 , telaY-16, gp.tileSize+2, 12 );
+                g2.setColor(new Color(255,0,50));
+                g2.fillRect(telaX, telaY - 15, (int)valorVidaBarra, 10);
+                barraDeVidaCounter ++;
+
+                if (barraDeVidaCounter > 600){
+                    barraDeVidaCounter = 0;
+                    barraDeVidaAtivada = false;
                 }
             }
+
+
+
+            if (invencivel){
+                if (iFrames % 6 < 3) {
+                    barraDeVidaAtivada = true;
+                    barraDeVidaCounter = 0;
+                    mudarOpacidade(g2,0.3f);
+                }
+            }
+
+            if (morrendo){
+                animacaoMorte(g2);
+            }
             g2.drawImage(imagem, telaX, telaY, gp.tileSize, gp.tileSize, null);
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+            mudarOpacidade(g2, 1f);
 
         }
 

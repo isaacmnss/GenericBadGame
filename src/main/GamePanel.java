@@ -105,16 +105,19 @@ public class GamePanel extends JPanel implements Runnable{
                     npc.update();
                 }
             }
-            for (Entidade monstro : monstros) {
-                if (monstro != null){
-                    monstro.update();
+            for (int i = 0; i < monstros.length; i++) {
+                Entidade monstro = monstros[i];
+                if (monstro != null) {
+                    if (monstro.vivo && !monstro.morrendo) {
+                        monstro.update();
+                    }
+                    if (!monstro.vivo) {
+                        monstros[i] = null;
+                    }
                 }
             }
         }
-        if (gameState == pauseState){
-
-        }
-
+        if (gameState == pauseState){}
     }
 
     public void paintComponent(Graphics g){

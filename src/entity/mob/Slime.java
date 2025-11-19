@@ -62,4 +62,10 @@ public class Slime extends Entidade {
         }
 
     }
+
+    @Override
+    public void damageReaction() {
+        lockActionCounter = 0;
+        direcao = gp.jogador.direcao;
+    }
 }

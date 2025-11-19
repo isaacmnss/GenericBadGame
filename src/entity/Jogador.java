@@ -162,7 +162,6 @@ public class Jogador extends Entidade {
 
             int indexMonstro = gp.cm.checkEntidade(this, gp.monstros);
             aplicarDanoEmMonstro(indexMonstro);
-
             worldX = worldXAtual;
             worldY = worldYAtual;
             solidArea.width = solidAreaWidth;
@@ -203,8 +202,10 @@ public class Jogador extends Entidade {
             if (!gp.monstros[indexMonstro].invencivel) {
                 gp.monstros[indexMonstro].vida -=1;
                 gp.monstros[indexMonstro].invencivel = true;
+                gp.monstros[indexMonstro].damageReaction();
+
                 if (gp.monstros[indexMonstro].vida <= 0){
-                    gp.monstros[indexMonstro] = null;
+                    gp.monstros[indexMonstro].morrendo = true;
                 }
             }
         }
