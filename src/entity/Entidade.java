@@ -25,7 +25,6 @@ public class Entidade {
     String[]  dialogos = new String[20];
 
     public int worldX, worldY;
-    public int velocidade;
     public String direcao = "baixo";
     int indexDialogo = 0;
     public boolean invencivel = false;
@@ -44,9 +43,23 @@ public class Entidade {
 
     public int vidaMaxima;
     public int vida;
+    public int velocidade;
     public String nome;
     public boolean colisao = false;
     public int tipo;
+    public int nivel;
+    public int forca;
+    public int destreza;
+    public int ataque;
+    public int defesa;
+    public int exp;
+    public int expParaUpar;
+    public int moedas;
+    public Entidade armaAtual;
+    public Entidade escudoAtual;
+
+    public int danoDeAtaque;
+    public int valorDefesa;
 
 
     public Entidade(GamePanel gp) {

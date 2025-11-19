@@ -1,5 +1,7 @@
 package entity;
 
+import entity.objects.EscudoMadeira;
+import entity.objects.EspadaPadrao;
 import main.GamePanel;
 import input.KeyHandler;
 
@@ -40,9 +42,30 @@ public class Jogador extends Entidade {
         velocidade = 4;
         direcao = "baixo";
 
+        nivel = 1;
         vidaMaxima = 6;
         vida = vidaMaxima;
+        forca = 1;
+        destreza = 1;
+        exp = 0;
+        expParaUpar = 5;
+        moedas = 0;
+        armaAtual = new EspadaPadrao(gp);
+        escudoAtual = new EscudoMadeira(gp);
+        ataque = getAtaque();
+        defesa = getDefesa();
+
     }
+
+    private int getAtaque() {
+        return ataque =  forca * armaAtual.danoDeAtaque;
+    }
+
+    private int getDefesa() {
+        return defesa = destreza * escudoAtual.valorDefesa;
+    }
+
+
 
     public void getImagemJogador(){
         cima1 = setup("/player/boy_up_1.png", gp.tileSize, gp.tileSize);
@@ -67,11 +90,11 @@ public class Jogador extends Entidade {
     }
 
     public void update(){
-
+        gp.eventHandler.checkEvento();
         if (atacando){
             atacar();
-
         }
+
         else if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.rightPressed || keyHandler.leftPressed || keyHandler.interactPressed){
             if(keyHandler.upPressed){
                 direcao = "cima";
@@ -97,9 +120,6 @@ public class Jogador extends Entidade {
 
             int indexMonstro = gp.cm.checkEntidade(this, gp.monstros);
             contatoMonstro(indexMonstro);
-
-            gp.eventHandler.checkEvento();
-
 
 
             if (!collisionOn && !keyHandler.interactPressed){

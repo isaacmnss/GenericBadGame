@@ -47,7 +47,12 @@ public class HUD {
             drawVidaJogador();
             drawDialogo();
         }
+        if (gp.gameState == gp.characterState){
+            drawTelaStatus();
+        }
     }
+
+
 
     public void drawVidaJogador(){
         int x = gp.tileSize/2;
@@ -149,6 +154,100 @@ public class HUD {
         }
     }
 
+    private void drawTelaStatus() {
+        final int molduraX = gp.tileSize;
+        final int molduraY = gp. tileSize;
+        final int laguraMoldura = gp.tileSize * 5;
+        final int alturaMoldura = gp.tileSize * 10;
+
+        drawJanela(molduraX, molduraY, laguraMoldura, alturaMoldura);
+
+        g2.setColor(Color.white);
+        g2.setFont(g2.getFont().deriveFont(24F));
+
+        int textoX = molduraX + 20;
+        int textoY = molduraY + gp.tileSize;
+        final int espacamentoLinha = 35;
+
+        g2.drawString("Nível", textoX, textoY);
+        textoY += espacamentoLinha;
+        g2.drawString("Vida", textoX, textoY);
+        textoY += espacamentoLinha;
+        g2.drawString("Força", textoX, textoY);
+        textoY += espacamentoLinha;
+        g2.drawString("Destreza", textoX, textoY);
+        textoY += espacamentoLinha;
+        g2.drawString("Ataque", textoX, textoY);
+        textoY += espacamentoLinha;
+        g2.drawString("Defesa", textoX, textoY);
+        textoY += espacamentoLinha;
+        g2.drawString("Exp.", textoX, textoY);
+        textoY += espacamentoLinha;
+        g2.drawString("Próximo Nível", textoX, textoY);
+        textoY += espacamentoLinha;
+        g2.drawString("Moedas", textoX, textoY);
+        textoY += espacamentoLinha +20;
+        g2.drawString("Arma", textoX, textoY);
+        textoY += espacamentoLinha +15;
+        g2.drawString("Escudo", textoX, textoY);
+
+        int tailX = (molduraX + laguraMoldura) -30;
+
+        textoY = molduraY + gp.tileSize;
+        String valor;
+
+        valor = String.valueOf(gp.jogador.nivel);
+        textoX = getXParaTextoAlinhado(valor, tailX);
+        g2.drawString(valor, textoX, textoY);
+        textoY += espacamentoLinha;
+
+        valor = String.valueOf(gp.jogador.vida+"/"+gp.jogador.vidaMaxima);
+        textoX = getXParaTextoAlinhado(valor, tailX);
+        g2.drawString(valor, textoX, textoY);
+        textoY += espacamentoLinha;
+
+        valor = String.valueOf(gp.jogador.forca);
+        textoX = getXParaTextoAlinhado(valor, tailX);
+        g2.drawString(valor, textoX, textoY);
+        textoY += espacamentoLinha;
+
+        valor = String.valueOf(gp.jogador.defesa);
+        textoX = getXParaTextoAlinhado(valor, tailX);
+        g2.drawString(valor, textoX, textoY);
+        textoY += espacamentoLinha;
+
+        valor = String.valueOf(gp.jogador.ataque);
+        textoX = getXParaTextoAlinhado(valor, tailX);
+        g2.drawString(valor, textoX, textoY);
+        textoY += espacamentoLinha;
+
+        valor = String.valueOf(gp.jogador.destreza);
+        textoX = getXParaTextoAlinhado(valor, tailX);
+        g2.drawString(valor, textoX, textoY);
+        textoY += espacamentoLinha;
+
+        valor = String.valueOf(gp.jogador.exp);
+        textoX = getXParaTextoAlinhado(valor, tailX);
+        g2.drawString(valor, textoX, textoY);
+        textoY += espacamentoLinha;
+
+        valor = String.valueOf(gp.jogador.expParaUpar);
+        textoX = getXParaTextoAlinhado(valor, tailX);
+        g2.drawString(valor, textoX, textoY);
+        textoY += espacamentoLinha;
+
+        valor = String.valueOf(gp.jogador.moedas);
+        textoX = getXParaTextoAlinhado(valor, tailX);
+        g2.drawString(valor, textoX, textoY);
+        textoY += espacamentoLinha;
+
+        g2.drawImage(gp.jogador.armaAtual.baixo1, tailX - gp.tileSize, textoY-14, null);
+        textoY += gp.tileSize;
+
+        g2.drawImage(gp.jogador.escudoAtual.baixo1, tailX - gp.tileSize, textoY-14, null);
+
+    }
+
     public void drawJanela(int x, int y, int largura, int altura){
         Color c = new Color(0,0,0, 210);
         g2.setColor(c);
@@ -164,6 +263,11 @@ public class HUD {
     public int getXParaTextoCentralizado(String texto){
         int tamanhoTexto = (int)g2.getFontMetrics().getStringBounds(texto, g2).getWidth();
         return gp.larguraTela/2 - tamanhoTexto/2;
+    }
+
+    public int getXParaTextoAlinhado(String texto, int tailX){
+        int tamanhoTexto = (int) g2.getFontMetrics().getStringBounds(texto, g2).getWidth();
+        return tailX - tamanhoTexto;
     }
 
 }
