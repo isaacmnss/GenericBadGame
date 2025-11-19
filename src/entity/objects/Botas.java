@@ -7,7 +7,7 @@ public class Botas extends Entidade {
     public Botas(GamePanel gp){
        super(gp);
         nome = "botas";
-        baixo1 = setup("/objects/boots.png");
+        baixo1 = setup("/objects/boots.png", gp.tileSize, gp.tileSize);
         colisao = true;
     }
 }

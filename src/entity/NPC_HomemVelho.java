@@ -21,21 +21,22 @@ public class NPC_HomemVelho extends Entidade{
 
 
     public void getImagem(){
-        cima1 = setup("/NPC/oldman_up_1.png");
-        cima2 = setup("/NPC/oldman_up_2.png");
-        baixo1 = setup("/NPC/oldman_down_1.png");
-        baixo2 = setup("/NPC/oldman_down_2.png");
-        esquerda1 = setup("/NPC/oldman_left_1.png");
-        esquerda2 = setup("/NPC/oldman_left_2.png");
-        direita1 = setup("/NPC/oldman_right_1.png");
-        direita2 = setup("/NPC/oldman_right_2.png");
+        cima1 = setup("/NPC/oldman_up_1.png", gp.tileSize, gp.tileSize);
+        cima2 = setup("/NPC/oldman_up_2.png", gp.tileSize, gp.tileSize);
+        baixo1 = setup("/NPC/oldman_down_1.png", gp.tileSize, gp.tileSize);
+        baixo2 = setup("/NPC/oldman_down_2.png", gp.tileSize, gp.tileSize);
+        esquerda1 = setup("/NPC/oldman_left_1.png", gp.tileSize, gp.tileSize);
+        esquerda2 = setup("/NPC/oldman_left_2.png", gp.tileSize, gp.tileSize);
+        direita1 = setup("/NPC/oldman_right_1.png", gp.tileSize, gp.tileSize);
+        direita2 = setup("/NPC/oldman_right_2.png", gp.tileSize, gp.tileSize);
     }
 
     public void setDialogo(){
         dialogos [0] = "Olá, jovem!";
-        dialogos [1] = "Você vem à esta ilha em busca\n de seus tesouros?";
-        dialogos [2] = "Eu costumava ser um aventureiro\n como você, mas aí eu levei uma\n flechada no joelho";
-        dialogos [3] = "Te desejo boa sorte";
+        dialogos [1] = "Você vem à esta ilha em busca\nde seus tesouros?";
+        dialogos [2] = "Eu costumava ser um aventureiro como\nvocê, mas aí eu levei uma flechada no\njoelho";
+        dialogos [3] = "Aqui no sul dessa aldeia há um grupo\nde slimes que incomoda bastante\npoderia dar um jeito nisso?";
+        dialogos [4] = "Te desejo boa sorte";
     }
 
     @Override

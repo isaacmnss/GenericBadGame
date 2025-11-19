@@ -9,7 +9,7 @@ public class Porta extends Entidade {
     public Porta(GamePanel gp){
         super(gp);
         nome = "porta";
-        baixo1 = setup("/objects/door.png");
+        baixo1 = setup("/objects/door.png", gp.tileSize, gp.tileSize);
         colisao = true;
 
         solidArea.x = 0;

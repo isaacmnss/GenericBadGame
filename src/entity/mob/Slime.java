@@ -6,8 +6,11 @@ import main.GamePanel;
 import java.util.Random;
 
 public class Slime extends Entidade {
+
+    GamePanel gp;
     public Slime(GamePanel gp) {
         super(gp);
+        this.gp = gp;
 
         nome = "Slime Verde";
         tipo = 2;
@@ -26,14 +29,14 @@ public class Slime extends Entidade {
     }
 
     public void getImage(){
-        cima1 = setup("/monster/greenslime_down_1.png");
-        cima2 = setup("/monster/greenslime_down_2.png");
-        baixo1 = setup("/monster/greenslime_down_1.png");
-        baixo2 = setup("/monster/greenslime_down_2.png");
-        esquerda1 = setup("/monster/greenslime_down_1.png");
-        esquerda2 = setup("/monster/greenslime_down_2.png");
-        direita1 = setup("/monster/greenslime_down_1.png");
-        direita2 = setup("/monster/greenslime_down_2.png");
+        cima1 = setup("/monster/greenslime_down_1.png", gp.tileSize, gp.tileSize);
+        cima2 = setup("/monster/greenslime_down_2.png", gp.tileSize, gp.tileSize);
+        baixo1 = setup("/monster/greenslime_down_1.png", gp.tileSize, gp.tileSize);
+        baixo2 = setup("/monster/greenslime_down_2.png", gp.tileSize, gp.tileSize);
+        esquerda1 = setup("/monster/greenslime_down_1.png", gp.tileSize, gp.tileSize);
+        esquerda2 = setup("/monster/greenslime_down_2.png", gp.tileSize, gp.tileSize);
+        direita1 = setup("/monster/greenslime_down_1.png", gp.tileSize, gp.tileSize);
+        direita2 = setup("/monster/greenslime_down_2.png", gp.tileSize, gp.tileSize);
     }
 
     public void setAcao(){

@@ -7,6 +7,6 @@ public class Chave extends Entidade {
     public Chave(GamePanel gp){
         super(gp);
         nome = "chave";
-        baixo1 = setup("/objects/key.png");
+        baixo1 = setup("/objects/key.png", gp.tileSize, gp.tileSize);
     }
 }

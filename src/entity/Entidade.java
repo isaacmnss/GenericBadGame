@@ -11,23 +11,34 @@ import java.util.Objects;
 
 public class Entidade {
     GamePanel gp;
-    public int worldX, worldY;
-    public int velocidade;
+
+    public BufferedImage imagem, imagem2, imagem3;
     public BufferedImage cima1, cima2, baixo1, baixo2, esquerda1, esquerda2, direita1, direita2;
-    public String direcao = "baixo";
-    public int spriteCounter = 0;
-    public int spriteNum = 1;
+    public BufferedImage ataqueCima1, ataqueCima2, ataqueBaixo1, ataqueBaixo2, ataqueEsquerda1, ataqueEsquerda2,
+    ataqueDireita1, ataqueDireita2;
+
+
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
+    public Rectangle areaAtaque = new Rectangle(0,0,0,0);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
-    public int lockActionCounter = 0;
-    public boolean invencibilidade = false;
-    public int iFrames = 0;
     String[]  dialogos = new String[20];
+
+    public int worldX, worldY;
+    public int velocidade;
+    public String direcao = "baixo";
     int indexDialogo = 0;
+    public boolean invencivel = false;
+    boolean atacando = false;
+
+    public int iFrames = 0;
+    public int spriteCounter = 0;
+    public int spriteNum = 1;
+    public int lockActionCounter = 0;
+
+
     public int vidaMaxima;
     public int vida;
-    public BufferedImage imagem, imagem2, imagem3;
     public String nome;
     public boolean colisao = false;
     public int tipo;
@@ -66,9 +77,9 @@ public class Entidade {
         boolean  contatoJogador = gp.cm.checkPlayer(this);
 
         if (this.tipo == 2 && contatoJogador){
-            if (!gp.jogador.invencibilidade){
+            if (!gp.jogador.invencivel){
                 gp.jogador.vida -=1;
-                gp.jogador.invencibilidade = true;
+                gp.jogador.invencivel = true;
             }
         }
 
@@ -89,15 +100,24 @@ public class Entidade {
                 spriteNum = 1;
             }
             spriteCounter = 0;
+
+        }
+
+        if (invencivel){
+            iFrames++;
+            if (iFrames > 40){
+                invencivel = false;
+                iFrames = 0;
+            }
         }
     }
 
-    public BufferedImage setup(String pathImagem){
+    public BufferedImage setup(String pathImagem, int largura, int altura){
         UtilityTool utilityTool = new UtilityTool();
         BufferedImage imagem;
         try {
             imagem = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(pathImagem)));
-            imagem = utilityTool.scaleImage(imagem, gp.tileSize, gp.tileSize);
+            imagem = utilityTool.scaleImage(imagem, largura, altura);
         }catch (IOException e){
             throw new RuntimeException("Falha ao obter recurso: "+pathImagem, e);
         }
@@ -116,39 +136,29 @@ public class Entidade {
                 worldY - gp.tileSize < gp.jogador.worldY + gp.jogador.screenY){
             switch (direcao){
                 case "cima" :
-                    if (spriteNum == 1){
-                        imagem = cima1;
-                    }
-                    if (spriteNum == 2){
-                        imagem = cima2;
-                    }
+                    if (spriteNum == 1) {imagem = cima1;}
+                    if (spriteNum == 2) {imagem = cima2;}
                     break;
                 case "baixo":
-                    if (spriteNum == 1){
-                        imagem = baixo1;
-                    }
-                    if (spriteNum == 2){
-                        imagem = baixo2;
-                    }
+                    if (spriteNum == 1) {imagem = baixo1;}
+                    if (spriteNum == 2) {imagem = baixo2;}
                     break;
                 case "esquerda":
-                    if (spriteNum == 1){
-                        imagem = esquerda1;
-                    }
-                    if (spriteNum == 2){
-                        imagem = esquerda2;
-                    }
+                    if (spriteNum == 1) {imagem = esquerda1;}
+                    if (spriteNum == 2) {imagem = esquerda2;}
                     break;
                 case "direita":
-                    if (spriteNum == 1){
-                        imagem = direita1;
-                    }
-                    if (spriteNum == 2){
-                        imagem = direita2;
-                    }
+                    if (spriteNum == 1) {imagem = direita1;}
+                    if (spriteNum == 2) {imagem = direita2;}
                     break;
             }
+            if (invencivel){
+                if (iFrames % 6 < 3) {
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+                }
+            }
             g2.drawImage(imagem, telaX, telaY, gp.tileSize, gp.tileSize, null);
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
         }
 
