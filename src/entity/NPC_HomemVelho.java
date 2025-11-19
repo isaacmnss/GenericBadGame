@@ -12,6 +12,7 @@ public class NPC_HomemVelho extends Entidade{
         direcao = "baixo";
         velocidade = 1;
         getImagem();
+        setDialogo();
 
         solidArea = new Rectangle(8, 16, 32, 32);
         solidAreaDefaultX = solidArea.x;
@@ -28,6 +29,13 @@ public class NPC_HomemVelho extends Entidade{
         esquerda2 = setup("/NPC/oldman_left_2.png");
         direita1 = setup("/NPC/oldman_right_1.png");
         direita2 = setup("/NPC/oldman_right_2.png");
+    }
+
+    public void setDialogo(){
+        dialogos [0] = "Olá, jovem!";
+        dialogos [1] = "Você vem à esta ilha em busca\n de seus tesouros?";
+        dialogos [2] = "Eu costumava ser um aventureiro\n como você, mas aí eu levei uma\n flechada no joelho";
+        dialogos [3] = "Te desejo boa sorte";
     }
 
     @Override
@@ -50,8 +58,12 @@ public class NPC_HomemVelho extends Entidade{
             if (i >75){
                 direcao = "direita";
             }
-            lockActionCounter =0;
+            lockActionCounter = 0;
         }
 
+    }
+
+    public void falar(){
+        super.falar();
     }
 }

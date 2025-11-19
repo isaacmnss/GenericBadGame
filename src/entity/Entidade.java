@@ -21,13 +21,28 @@ public class Entidade {
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
     public int lockActionCounter = 0;
+    String[]  dialogos = new String[20];
+    int indexDialogo = 0;
 
     public Entidade(GamePanel gp) {
         this.gp = gp;
     }
 
-    public void setAcao(){
+    public void setAcao(){}
+    public void falar() {
+        if (dialogos[indexDialogo] == null) {
+            indexDialogo = 0;
+        }
 
+        gp.hud.dialogoAtual = dialogos[indexDialogo];
+        indexDialogo++;
+
+        switch (gp.jogador.direcao){
+            case "cima" -> direcao = "baixo";
+            case "baixo" -> direcao = "cima";
+            case "esquerda" -> direcao = "direita";
+            case "direita" -> direcao = "esquerda";
+        }
     }
 
     public void update(){

@@ -105,8 +105,12 @@ public class Jogador extends Entidade {
 
     private void interagirComNPC(int npcIndex) {
         if(npcIndex != 999){
-            gp.gameState = gp.dialogState;
+            if (gp.keyHandler.talkPressed){
+                gp.gameState = gp.dialogState;
+                gp.npcs[npcIndex].falar();
+            }
         }
+        gp.keyHandler.talkPressed = false;
     }
 
     public void pegarObjeto(int index){
