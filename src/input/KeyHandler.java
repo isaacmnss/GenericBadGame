@@ -23,6 +23,31 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
+        if (gp.gameState == gp.titleState){
+
+            if(code == KeyEvent.VK_W){
+                gp.hud.comando--;
+                if(gp.hud.comando < 0){
+                    gp.hud.comando = 2;
+                }
+            }
+
+            if(code == KeyEvent.VK_S){
+                gp.hud.comando++;
+                if(gp.hud.comando > 2){
+                    gp.hud.comando = 0;
+                }
+            }
+            if(code == KeyEvent.VK_ENTER){
+                switch (gp.hud.comando){
+                    case 0 -> gp.gameState = gp.playState;
+                    case 1 -> System.out.println("ainda não implementado");
+                    case 2 -> System.exit(0);
+
+                }
+            }
+        }
+
         if (gp.gameState == gp.playState){
             if(code == KeyEvent.VK_W){
                 upPressed = true;

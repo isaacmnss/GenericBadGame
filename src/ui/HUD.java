@@ -11,6 +11,7 @@ public class HUD {
     Graphics2D g2;
     Font arial_40, arial_80B;
     public String dialogoAtual;
+    public int comando = 0;
 
     public HUD(GamePanel gp){
         this.gp = gp;
@@ -24,6 +25,10 @@ public class HUD {
         g2.setFont(arial_40);
         g2.setColor(Color.WHITE);
 
+        if (gp.gameState == gp.titleState){
+            drawTelaInicial();
+        }
+
         if(gp.gameState == gp.playState){
             //placehold.
         }
@@ -33,6 +38,53 @@ public class HUD {
         if (gp.gameState == gp.dialogState){
             drawDialogo();
         }
+    }
+
+    private void drawTelaInicial() {
+        g2.setColor(new Color(0,0,0));
+        g2.fillRect(0,0, gp.larguraTela, gp.alturaTela);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 90F));
+        String texto = "Jogo (sem nome)";
+        int x = getXParaTextoCentralizado(texto);
+        int y = gp.tileSize*3;
+
+        g2.setColor(Color.gray);
+        g2.drawString(texto, x+5, y+5);
+
+        g2.setColor(Color.white);
+        g2.drawString(texto, x, y);
+
+        x = gp.larguraTela/2 -(gp.tileSize*2)/2;
+        y += gp.tileSize*2;
+        g2.drawImage(gp.jogador.baixo1, x, y, gp.tileSize*2, gp.tileSize*2, null);
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
+
+        texto = "Novo jogo";
+        x = getXParaTextoCentralizado(texto);
+        y += gp.tileSize*3.5;
+        g2.drawString(texto, x, y);
+        if (comando == 0){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
+        texto = "Carregar jogo";
+        x = getXParaTextoCentralizado(texto);
+        y += gp.tileSize;
+        g2.drawString(texto, x, y);
+        if (comando == 1){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
+        texto = "Sair";
+        x = getXParaTextoCentralizado(texto);
+        y += gp.tileSize;
+        g2.drawString(texto, x, y);
+        if (comando == 2){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
+
     }
 
     public void drawTelaDePause(){
