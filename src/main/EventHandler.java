@@ -90,6 +90,7 @@ public class EventHandler {
             gp.gameState = gameState;
             gp.hud.dialogoAtual = "Você bebe a água.\nIsso te enche de determinação.\nVida recuperada";
             gp.jogador.vida = gp.jogador.vidaMaxima;
+            gp.assetSetter.setMonstros();
         }
     }
 }

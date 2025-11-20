@@ -21,12 +21,29 @@ public class AssetSetter {
     }
 
     public void setMonstros(){
-        gp.monstros[0] = new Slime(gp);
-        gp.monstros[0].worldX = gp.tileSize*23;
-        gp.monstros[0].worldY = gp.tileSize*36;
 
-        gp.monstros[1] = new Slime(gp);
-        gp.monstros[1].worldX = gp.tileSize*23;
-        gp.monstros[1].worldY = gp.tileSize*37;
+        int i = 0;
+        gp.monstros[i] = new Slime(gp);
+        gp.monstros[i].worldX = gp.tileSize*23;
+        gp.monstros[i].worldY = gp.tileSize*36;
+        i++;
+
+        gp.monstros[i] = new Slime(gp);
+        gp.monstros[i].worldX = gp.tileSize*23;
+        gp.monstros[i].worldY = gp.tileSize*37;
+        i++;
+
+        gp.monstros[i] = new Slime(gp);
+        gp.monstros[i].worldX = gp.tileSize*24;
+        gp.monstros[i].worldY = gp.tileSize*35;
+        i++;
+        gp.monstros[i] = new Slime(gp);
+        gp.monstros[i].worldX = gp.tileSize*34;
+        gp.monstros[i].worldY = gp.tileSize*42;
+        i++;
+
+        gp.monstros[i] = new Slime(gp);
+        gp.monstros[i].worldX = gp.tileSize*38;
+        gp.monstros[i].worldY = gp.tileSize*42;
     }
 }

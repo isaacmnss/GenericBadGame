@@ -235,9 +235,29 @@ public class Jogador extends Entidade {
                 if (gp.monstros[indexMonstro].vida <= 0){
                     gp.monstros[indexMonstro].morrendo = true;
                     gp.hud.addMensagem(gp.monstros[indexMonstro].nome+" morto!");
+                    gp.hud.addMensagem("+"+gp.monstros[indexMonstro].exp+" exp");
+                    exp += gp.monstros[indexMonstro].exp;
+                    checkLevelUp();
 
                 }
             }
+        }
+    }
+
+    private void checkLevelUp() {
+        if (exp >= expParaUpar){
+            nivel++;
+            exp -= expParaUpar;
+            expParaUpar = expParaUpar*3;
+            vidaMaxima += 2;
+            forca++;
+            destreza++;
+            ataque = getAtaque();
+            defesa = getDefesa();
+
+            gp.gameState = gp.dialogState;
+            gp.hud.dialogoAtual = "Você subiu para o nível "+ nivel+"!\n" +
+                    "Você se sente mais forte.";
         }
     }
 
