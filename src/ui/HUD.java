@@ -245,7 +245,7 @@ public class HUD {
         g2.drawString(valor, textoX, textoY);
         textoY += espacamentoLinha;
 
-        valor = String.valueOf(gp.jogador.defesa);
+        valor = String.valueOf(gp.jogador.destreza);
         textoX = getXParaTextoAlinhado(valor, tailX);
         g2.drawString(valor, textoX, textoY);
         textoY += espacamentoLinha;
@@ -255,7 +255,7 @@ public class HUD {
         g2.drawString(valor, textoX, textoY);
         textoY += espacamentoLinha;
 
-        valor = String.valueOf(gp.jogador.destreza);
+        valor = String.valueOf(gp.jogador.defesa);
         textoX = getXParaTextoAlinhado(valor, tailX);
         g2.drawString(valor, textoX, textoY);
         textoY += espacamentoLinha;
@@ -297,6 +297,12 @@ public class HUD {
         int tamanhoSlot = gp.tileSize + 3;
 
         for (int i = 0; i < gp.jogador.inventario.size(); i++) {
+            if (gp.jogador.inventario.get(i) == gp.jogador.armaAtual || gp.jogador.inventario.get(i) == gp.jogador.escudoAtual){
+                g2.setColor(new Color(240,190,90));
+                g2.fillRoundRect(xSlot, ySlot, gp.tileSize, gp.tileSize, 10, 10);
+
+            }
+
             g2.drawImage(gp.jogador.inventario.get(i).baixo1, xSlot, ySlot, null);
             xSlot += tamanhoSlot;
 

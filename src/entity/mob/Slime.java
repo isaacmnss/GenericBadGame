@@ -13,7 +13,7 @@ public class Slime extends Entidade {
         this.gp = gp;
 
         nome = "Slime Verde";
-        tipo = 2;
+        tipo = tipo_monstro;
         velocidade = 1;
         vidaMaxima = 4;
         vida = vidaMaxima;

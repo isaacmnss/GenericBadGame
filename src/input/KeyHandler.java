@@ -39,27 +39,6 @@ public class KeyHandler implements KeyListener {
         else if (gp.gameState == gp.characterState){
             characterState(code);
 
-            if (code == KeyEvent.VK_W){
-                if (gp.hud.linhaSlot !=0){
-                    gp.hud.linhaSlot--;
-                }
-            }
-            if (code == KeyEvent.VK_A){
-                if (gp.hud.colunaSlot != 0){
-                    gp.hud.colunaSlot--;
-                }
-            }
-            if (code == KeyEvent.VK_S){
-                if (gp.hud.linhaSlot != 3){
-                    gp.hud.linhaSlot++;
-                }
-            }
-            if (code == KeyEvent.VK_D){
-                if (gp.hud.colunaSlot !=4){
-                    gp.hud.colunaSlot++;
-                }
-
-            }
         }
     }
 
@@ -126,6 +105,29 @@ public class KeyHandler implements KeyListener {
     public void characterState(int code){
         if (code == KeyEvent.VK_C){
             gp.gameState = gp.playState;
+        }
+        if (code == KeyEvent.VK_W){
+            if (gp.hud.linhaSlot !=0){
+                gp.hud.linhaSlot--;
+            }
+        }
+        if (code == KeyEvent.VK_A){
+            if (gp.hud.colunaSlot != 0){
+                gp.hud.colunaSlot--;
+            }
+        }
+        if (code == KeyEvent.VK_S){
+            if (gp.hud.linhaSlot != 3){
+                gp.hud.linhaSlot++;
+            }
+        }
+        if (code == KeyEvent.VK_D){
+            if (gp.hud.colunaSlot !=4){
+                gp.hud.colunaSlot++;
+            }
+        }
+        if (code == KeyEvent.VK_ENTER){
+            gp.jogador.selecionarItem();
         }
     }
 

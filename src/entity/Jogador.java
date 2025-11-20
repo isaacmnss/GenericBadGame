@@ -33,9 +33,6 @@ public class Jogador extends Entidade {
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
 
-        areaAtaque.width = 36;
-        areaAtaque.height = 36;
-
         setValoresDefault();
         getImagemJogador();
         getImagemAtaqueJogador();
@@ -72,6 +69,7 @@ public class Jogador extends Entidade {
     }
 
     private int getAtaque() {
+        areaAtaque = armaAtual.areaAtaque;
         return ataque =  forca * armaAtual.danoDeAtaque;
     }
 
@@ -91,14 +89,29 @@ public class Jogador extends Entidade {
     }
 
     public void getImagemAtaqueJogador(){
-        ataqueCima1 = setup("/player/boy_attack_up_1.png", gp.tileSize, gp.tileSize*2);
-        ataqueCima2 = setup("/player/boy_attack_up_2.png", gp.tileSize, gp.tileSize*2);
-        ataqueBaixo1 = setup("/player/boy_attack_down_1.png", gp.tileSize, gp.tileSize*2);
-        ataqueBaixo2 = setup("/player/boy_attack_down_2.png", gp.tileSize, gp.tileSize*2);
-        ataqueEsquerda1 = setup("/player/boy_attack_left_1.png", gp.tileSize*2, gp.tileSize);
-        ataqueEsquerda2 = setup("/player/boy_attack_left_2.png", gp.tileSize*2, gp.tileSize);
-        ataqueDireita1 = setup("/player/boy_attack_right_1.png", gp.tileSize*2, gp.tileSize);
-        ataqueDireita2 = setup("/player/boy_attack_right_2.png", gp.tileSize*2, gp.tileSize);
+        if (armaAtual.tipo == tipo_espada){
+            ataqueCima1 = setup("/player/boy_attack_up_1.png", gp.tileSize, gp.tileSize*2);
+            ataqueCima2 = setup("/player/boy_attack_up_2.png", gp.tileSize, gp.tileSize*2);
+            ataqueBaixo1 = setup("/player/boy_attack_down_1.png", gp.tileSize, gp.tileSize*2);
+            ataqueBaixo2 = setup("/player/boy_attack_down_2.png", gp.tileSize, gp.tileSize*2);
+            ataqueEsquerda1 = setup("/player/boy_attack_left_1.png", gp.tileSize*2, gp.tileSize);
+            ataqueEsquerda2 = setup("/player/boy_attack_left_2.png", gp.tileSize*2, gp.tileSize);
+            ataqueDireita1 = setup("/player/boy_attack_right_1.png", gp.tileSize*2, gp.tileSize);
+            ataqueDireita2 = setup("/player/boy_attack_right_2.png", gp.tileSize*2, gp.tileSize);
+        }
+        if (armaAtual.tipo == tipo_machado){
+            ataqueCima1 = setup("/player/boy_axe_up_1.png", gp.tileSize, gp.tileSize*2);
+            ataqueCima2 = setup("/player/boy_axe_up_2.png", gp.tileSize, gp.tileSize*2);
+            ataqueBaixo1 = setup("/player/boy_axe_down_1.png", gp.tileSize, gp.tileSize*2);
+            ataqueBaixo2 = setup("/player/boy_axe_down_2.png", gp.tileSize, gp.tileSize*2);
+            ataqueEsquerda1 = setup("/player/boy_axe_left_1.png", gp.tileSize*2, gp.tileSize);
+            ataqueEsquerda2 = setup("/player/boy_axe_left_2.png", gp.tileSize*2, gp.tileSize);
+            ataqueDireita1 = setup("/player/boy_axe_right_1.png", gp.tileSize*2, gp.tileSize);
+            ataqueDireita2 = setup("/player/boy_axe_right_2.png", gp.tileSize*2, gp.tileSize);
+
+        }
+
+
     }
 
     public void update(){
@@ -276,8 +289,40 @@ public class Jogador extends Entidade {
     }
 
     public void pegarObjeto(int index){
-        if(index != 999){
 
+        if(index != 999){
+            String texto;
+            if (inventario.size() != tamanhoInventario){
+                inventario.add(gp.objeto[index]);
+                texto = "Pegou "+ gp.objeto[index].nome+"!";
+            }else{
+                texto = "Seu invetário está cheio";
+            }
+
+            gp.hud.addMensagem(texto);
+            gp.objeto [index] = null;
+
+        }
+    }
+
+    public void selecionarItem(){
+        int indexItem = gp.hud.getIndexItemNoSlot();
+
+        if(indexItem < inventario.size()){
+            Entidade itemSelecionado = inventario.get(indexItem);
+
+            if (itemSelecionado.tipo == tipo_espada || itemSelecionado.tipo == tipo_machado){
+                armaAtual = itemSelecionado;
+                ataque = getAtaque();
+                getImagemAtaqueJogador();
+            }
+            if (itemSelecionado.tipo == tipo_escudo){
+                escudoAtual = itemSelecionado;
+                defesa = getDefesa();
+            }
+            if (itemSelecionado.tipo == tipo_consumivel){
+             //implementar depois
+            }
         }
     }
 

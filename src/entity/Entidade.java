@@ -46,7 +46,6 @@ public class Entidade {
     public int velocidade;
     public String nome;
     public boolean colisao = false;
-    public int tipo;
     public int nivel;
     public int forca;
     public int destreza;
@@ -61,6 +60,15 @@ public class Entidade {
     public int danoDeAtaque;
     public int valorDefesa;
     public String descricao = "";
+
+    public int tipo;
+    public final int tipo_Jogador = 0;
+    public final int tipo_NPC = 1;
+    public final int tipo_monstro = 2;
+    public final int tipo_espada = 3;
+    public final int tipo_machado = 4;
+    public final int tipo_escudo = 5;
+    public final int tipo_consumivel = 6;
 
 
     public Entidade(GamePanel gp) {
@@ -84,6 +92,7 @@ public class Entidade {
             case "direita" -> direcao = "esquerda";
         }
     }
+
 
     public void update(){
 
@@ -201,7 +210,7 @@ public class Entidade {
                     break;
             }
 
-            if (tipo == 2 && barraDeVidaAtivada){
+            if (tipo == tipo_monstro && barraDeVidaAtivada){
 
                 double escalaVida = (double)gp.tileSize/vidaMaxima;
                 double valorVidaBarra = escalaVida*vida;
