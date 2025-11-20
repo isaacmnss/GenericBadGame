@@ -97,7 +97,11 @@ public class Entidade {
 
         if (this.tipo == 2 && contatoJogador){
             if (!gp.jogador.invencivel){
-                gp.jogador.vida -=1;
+                int dano = ataque - gp.jogador.defesa;
+                if (dano < -0){
+                    dano = 0;
+                }
+                gp.jogador.vida -=dano;
                 gp.jogador.invencivel = true;
             }
         }

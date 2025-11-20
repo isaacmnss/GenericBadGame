@@ -17,7 +17,7 @@ public class Slime extends Entidade {
         velocidade = 1;
         vidaMaxima = 4;
         vida = vidaMaxima;
-        ataque = 1;
+        ataque = 3;
         defesa = 0;
 
         solidArea.x = 3;

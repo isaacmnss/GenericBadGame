@@ -6,12 +6,15 @@ import entity.objects.Coracao;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class HUD {
     GamePanel gp;
     Graphics2D g2;
     Font arial_40, arial_80B;
     BufferedImage heart_full, heart_half, heart_blank;
+    ArrayList<String> mensagem = new ArrayList<>();
+    ArrayList<Integer> contadorMensagem = new ArrayList<>();
     public String dialogoAtual;
     public int comando = 0;
 
@@ -27,6 +30,11 @@ public class HUD {
 
     }
 
+    public void addMensagem(String texto){
+        mensagem.add(texto);
+        contadorMensagem.add(0);
+    }
+
     public void draw(Graphics2D g2){
         this.g2 = g2;
         g2.setFont(arial_40);
@@ -38,6 +46,7 @@ public class HUD {
 
         if(gp.gameState == gp.playState){
             drawVidaJogador();
+            drawMensagem();
         }
         if (gp.gameState == gp.pauseState){
             drawVidaJogador();
@@ -79,6 +88,30 @@ public class HUD {
             i++;
             x+= gp.tileSize;
         }
+    }
+
+    public void drawMensagem(){
+        int xMensagem = gp.tileSize;
+        int yMensagem = gp.tileSize*4;
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 26));
+
+        for (int i = 0; i < mensagem.size(); i++) {
+            if (mensagem.get(i) != null){
+                g2.setColor(Color.black);
+                g2.drawString(mensagem.get(i), xMensagem+2, yMensagem+2 );
+                g2.setColor(Color.white);
+                g2.drawString(mensagem.get(i), xMensagem, yMensagem);
+                int contador = contadorMensagem.get(i) +1;
+                contadorMensagem.set(i, contador);
+                yMensagem += 50;
+
+                if (contadorMensagem.get(i) > 180){
+                    mensagem.remove(i);
+                    contadorMensagem.remove(i);
+                }
+            }
+        }
+
     }
 
     private void drawTelaInicial() {

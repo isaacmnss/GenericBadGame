@@ -65,8 +65,6 @@ public class Jogador extends Entidade {
         return defesa = destreza * escudoAtual.valorDefesa;
     }
 
-
-
     public void getImagemJogador(){
         cima1 = setup("/player/boy_up_1.png", gp.tileSize, gp.tileSize);
         cima2 = setup("/player/boy_up_2.png", gp.tileSize, gp.tileSize);
@@ -211,7 +209,11 @@ public class Jogador extends Entidade {
     public void contatoMonstro(int indexMonstro){
         if (indexMonstro != 999){
             if (!invencivel){
-                vida -=1;
+                int dano = gp.monstros[indexMonstro].ataque - defesa;
+                if (dano < -0){
+                    dano = 0;
+                }
+                vida -=dano;
                 invencivel = true;
             }
         }
@@ -220,12 +222,20 @@ public class Jogador extends Entidade {
     public void aplicarDanoEmMonstro(int indexMonstro){
         if( indexMonstro != 999){
             if (!gp.monstros[indexMonstro].invencivel) {
-                gp.monstros[indexMonstro].vida -=1;
+
+                int dano = ataque - gp.monstros[indexMonstro].defesa;
+                if (dano < 0) {
+                    dano = 0;
+                }
+                gp.monstros[indexMonstro].vida -=dano;
                 gp.monstros[indexMonstro].invencivel = true;
                 gp.monstros[indexMonstro].damageReaction();
+                gp.hud.addMensagem(dano+ " de dano!");
 
                 if (gp.monstros[indexMonstro].vida <= 0){
                     gp.monstros[indexMonstro].morrendo = true;
+                    gp.hud.addMensagem(gp.monstros[indexMonstro].nome+" morto!");
+
                 }
             }
         }
