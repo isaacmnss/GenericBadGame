@@ -1,5 +1,6 @@
 package entity;
 
+import entity.objects.Chave;
 import entity.objects.EscudoMadeira;
 import entity.objects.EspadaPadrao;
 import main.GamePanel;
@@ -7,6 +8,7 @@ import input.KeyHandler;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Jogador extends Entidade {
     private final KeyHandler keyHandler;
@@ -15,6 +17,9 @@ public class Jogador extends Entidade {
     public final int screenY;
 
     public int idleCounter = 0;
+
+    public ArrayList<Entidade> inventario = new ArrayList<>();
+    public final int tamanhoInventario = 20;
 
     public Jogador(GamePanel gamePanel, KeyHandler keyHandler){
         super(gamePanel);
@@ -34,6 +39,7 @@ public class Jogador extends Entidade {
         setValoresDefault();
         getImagemJogador();
         getImagemAtaqueJogador();
+        setItem();
     }
 
     public void setValoresDefault(){
@@ -54,6 +60,14 @@ public class Jogador extends Entidade {
         escudoAtual = new EscudoMadeira(gp);
         ataque = getAtaque();
         defesa = getDefesa();
+
+    }
+
+    public void setItem(){
+        inventario.add(armaAtual);
+        inventario.add(escudoAtual);
+        inventario.add(new Chave(gp));
+        inventario.add(new Chave(gp));
 
     }
 

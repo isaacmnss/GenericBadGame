@@ -10,5 +10,6 @@ public class EspadaPadrao extends Entidade {
         nome = "Espada Normal";
         baixo1 = setup("/objects/sword_normal.png", gp.tileSize, gp.tileSize);
         danoDeAtaque = 1;
+        descricao = "["+nome+"]\nUma espada velha.\nNão está muito afiada.";
     }
 }

@@ -60,6 +60,7 @@ public class Entidade {
 
     public int danoDeAtaque;
     public int valorDefesa;
+    public String descricao = "";
 
 
     public Entidade(GamePanel gp) {

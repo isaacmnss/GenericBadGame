@@ -10,5 +10,6 @@ public class EscudoMadeira extends Entidade {
         nome ="Escudo de madeira";
         baixo1 = setup("/objects/shield_wood.png", gp.tileSize, gp.tileSize);
         valorDefesa = 1;
+        descricao = "["+nome+"]\nUm escudo simples, feito\nde madeira";
     }
 }

@@ -17,6 +17,8 @@ public class HUD {
     ArrayList<Integer> contadorMensagem = new ArrayList<>();
     public String dialogoAtual;
     public int comando = 0;
+    public int colunaSlot = 0;
+    public int linhaSlot = 0;
 
     public HUD(GamePanel gp){
         this.gp = gp;
@@ -58,10 +60,9 @@ public class HUD {
         }
         if (gp.gameState == gp.characterState){
             drawTelaStatus();
+            drawInventario();
         }
     }
-
-
 
     public void drawVidaJogador(){
         int x = gp.tileSize/2;
@@ -279,6 +280,69 @@ public class HUD {
 
         g2.drawImage(gp.jogador.escudoAtual.baixo1, tailX - gp.tileSize, textoY-14, null);
 
+    }
+
+    private void drawInventario() {
+
+        int molduraX = gp.tileSize *9;
+        int molduraY = gp.tileSize;
+        int larguraMoldura = gp.tileSize*6;
+        int alturaMoldura = gp.tileSize*5;
+        drawJanela(molduraX,molduraY,larguraMoldura,alturaMoldura);
+
+        final int xSlotInicial = molduraX + 20;
+        final int ySlotInicial = molduraY + 20;
+        int xSlot = xSlotInicial;
+        int ySlot = ySlotInicial;
+        int tamanhoSlot = gp.tileSize + 3;
+
+        for (int i = 0; i < gp.jogador.inventario.size(); i++) {
+            g2.drawImage(gp.jogador.inventario.get(i).baixo1, xSlot, ySlot, null);
+            xSlot += tamanhoSlot;
+
+            if (i == 4 || i == 9 || i == 14){
+                xSlot = xSlotInicial;
+                ySlot += tamanhoSlot;
+            }
+        }
+
+        int cursorX = xSlotInicial + (gp.tileSize * colunaSlot);
+        int cursorY = ySlotInicial + (gp.tileSize * linhaSlot);
+        int larguraCursor = gp.tileSize;
+        int alturaCursor = gp.tileSize;
+
+        g2.setColor(Color.white);
+        g2.setStroke(new BasicStroke(3));
+        g2.drawRoundRect(cursorX, cursorY, larguraCursor, alturaCursor, 10, 10);
+
+        int molduraDescricaoX = molduraX;
+        int molduraDescricaoY = molduraY + alturaMoldura;
+        int larguraMolduraDescricao = larguraMoldura;
+        int alturaMolduraDescricao = gp.tileSize*3;
+
+
+        int xTexto = molduraDescricaoX + 20;
+        int yTexto = molduraDescricaoY + gp.tileSize;
+
+
+        g2.setFont(g2.getFont().deriveFont(22F));
+
+        int indexItem = getIndexItemNoSlot();
+
+        if (indexItem < gp.jogador.inventario.size()){
+            drawJanela(molduraDescricaoX, molduraDescricaoY, larguraMolduraDescricao, alturaMolduraDescricao);
+
+            for(String linha : gp.jogador.inventario.get(indexItem).descricao.split("\n")){
+                g2.drawString(linha, xTexto, yTexto);
+                yTexto += 32;
+            }
+
+
+        }
+    }
+
+    public int getIndexItemNoSlot(){
+        return colunaSlot + (linhaSlot*5);
     }
 
     public void drawJanela(int x, int y, int largura, int altura){

@@ -8,5 +8,6 @@ public class Chave extends Entidade {
         super(gp);
         nome = "chave";
         baixo1 = setup("/objects/key.png", gp.tileSize, gp.tileSize);
+        descricao = "["+nome+"]\nServe para abrir portas";
     }
 }
